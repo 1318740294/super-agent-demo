@@ -3,7 +3,12 @@
 
   const SnakeGame = window.SnakeGame;
   const STATE = SnakeGame.STATE;
-  const TICK_MS = 140;
+  const SPEEDS = Object.freeze({
+    slow: 220,
+    normal: 140,
+    fast: 90,
+  });
+  const SPEED_STORAGE_KEY = 'snake-speed';
 
   const canvas = document.getElementById('board');
   const ctx = canvas.getContext('2d');
@@ -17,13 +22,10 @@
   const overlayHint = document.getElementById('overlay-hint');
   const pauseBtn = document.getElementById('pause-btn');
   const restartBtn = document.getElementById('restart-btn');
+  const speedGroup = document.getElementById('speed');
+  const speedButtons = Array.from(document.querySelectorAll('.speed-btn'));
 
   const game = new SnakeGame({ cols: 20, rows: 20 });
-
-  // 仅在 ?debug=1 时暴露实例，供自动化测试读取状态。
-  if (new URLSearchParams(window.location.search).has('debug')) {
-    window.__snakeGame = game;
-  }
 
   const KEY_TO_DIRECTION = {
     ArrowUp: 'up',
@@ -77,6 +79,7 @@
   let accumulator = 0;
   let lastState = null;
   let lastReason = null;
+  let tickMs = SPEEDS.normal;
 
   /* ---------- 画布尺寸 ---------- */
 
@@ -314,8 +317,8 @@
 
     if (game.state === STATE.RUNNING) {
       accumulator += delta;
-      while (accumulator >= TICK_MS) {
-        accumulator -= TICK_MS;
+      while (accumulator >= tickMs) {
+        accumulator -= tickMs;
         tick();
         if (game.state !== STATE.RUNNING) break;
       }
@@ -325,6 +328,39 @@
 
     syncUI();
     render();
+  }
+
+  /* ---------- 速度配置 ---------- */
+
+  function applySpeed(speed, options = {}) {
+    if (!Object.prototype.hasOwnProperty.call(SPEEDS, speed)) return false;
+
+    tickMs = SPEEDS[speed];
+    speedGroup.dataset.speed = speed;
+    speedButtons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.speed === speed));
+    });
+    accumulator = 0;
+
+    if (options.persist !== false) {
+      try {
+        window.localStorage.setItem(SPEED_STORAGE_KEY, speed);
+      } catch (error) {
+        // 隐私模式等环境下无法写入时，仅本次生效即可。
+      }
+    }
+    return true;
+  }
+
+  function loadSpeed() {
+    let saved = null;
+    try {
+      saved = window.localStorage.getItem(SPEED_STORAGE_KEY);
+    } catch (error) {
+      saved = null;
+    }
+    const speed = saved && Object.prototype.hasOwnProperty.call(SPEEDS, saved) ? saved : 'normal';
+    applySpeed(speed, { persist: false });
   }
 
   /* ---------- 交互 ---------- */
@@ -412,6 +448,11 @@
   overlayAction.addEventListener('click', handleOverlayAction);
   pauseBtn.addEventListener('click', togglePause);
   restartBtn.addEventListener('click', restartGame);
+  speedButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      applySpeed(button.dataset.speed);
+    });
+  });
 
   if (typeof ResizeObserver === 'function') {
     new ResizeObserver(resizeBoard).observe(canvas);
@@ -419,6 +460,13 @@
     window.addEventListener('resize', resizeBoard);
   }
 
+  // 仅在 ?debug=1 时暴露实例，供自动化测试读取状态与当前速度。
+  if (new URLSearchParams(window.location.search).has('debug')) {
+    window.__snakeGame = game;
+    window.__snakeDebug = { getTickMs: () => tickMs };
+  }
+
+  loadSpeed();
   resizeBoard();
   syncUI();
   window.requestAnimationFrame(frame);
