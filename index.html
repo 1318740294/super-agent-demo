@@ -41,9 +41,17 @@
 
         <div class="toolbar">
           <span class="status" id="status" data-state="ready">准备开始</span>
-          <div class="actions">
-            <button class="btn btn-ghost" id="pause-btn" type="button">暂停</button>
-            <button class="btn btn-ghost" id="restart-btn" type="button">重新开始</button>
+          <div class="toolbar-right">
+            <div class="speed" id="speed" role="group" aria-label="移动速度" data-speed="normal">
+              <span class="speed-label">速度</span>
+              <button class="speed-btn" type="button" data-speed="slow" aria-pressed="false">慢速</button>
+              <button class="speed-btn" type="button" data-speed="normal" aria-pressed="true">标准</button>
+              <button class="speed-btn" type="button" data-speed="fast" aria-pressed="false">快速</button>
+            </div>
+            <div class="actions">
+              <button class="btn btn-ghost" id="pause-btn" type="button">暂停</button>
+              <button class="btn btn-ghost" id="restart-btn" type="button">重新开始</button>
+            </div>
           </div>
         </div>
       </main>

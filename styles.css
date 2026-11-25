@@ -275,6 +275,7 @@ body::before {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
+  flex-wrap: wrap;
   padding: 14px 6px 2px;
 }
 
@@ -318,6 +319,58 @@ body::before {
 .actions {
   display: flex;
   gap: 10px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.speed {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 5px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.speed-label {
+  padding: 0 5px 0 3px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.speed-btn {
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.16s ease, background 0.16s ease;
+}
+
+.speed-btn:hover {
+  color: var(--text);
+  background: rgba(109, 255, 158, 0.1);
+}
+
+.speed-btn[aria-pressed="true"] {
+  color: #04130a;
+  font-weight: 600;
+  background: linear-gradient(135deg, #b9ffd2, var(--green-strong));
+}
+
+.speed-btn:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
 }
 
 .key-hints {
@@ -403,6 +456,13 @@ kbd {
 
   .status {
     justify-content: center;
+  }
+
+  .toolbar-right {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-left: 0;
   }
 
   .actions {
