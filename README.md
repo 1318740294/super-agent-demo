@@ -59,4 +59,4 @@ npm test
 
 ## 截图
 
-![游戏进行中](docs/screenshots/gameplay.png)
+![游戏进行中](docs/screenshots/gameplay.jpg)
