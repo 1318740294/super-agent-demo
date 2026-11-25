@@ -1,3 +1,62 @@
-# super-agent-demo
+# 贪吃蛇 · Classic Snake
 
-A demo repository for trying dsh-superagent.
+一个用原生 HTML / CSS / JavaScript（Canvas）实现的经典贪吃蛇小游戏，无任何第三方运行时依赖。
+
+## 功能
+
+- 方向键（↑ ↓ ← →）控制蛇的移动，支持连续快速转向。
+- 吃到食物后蛇身增长，每颗食物加 10 分。
+- 撞到墙壁或撞到自身时游戏结束。
+- 支持开始、暂停、继续和重新开始。
+- 实时展示当前得分与游戏状态，游戏结束后可以直接再来一局。
+- 棋盘被填满时判定通关。
+
+## 运行
+
+直接用浏览器打开 `index.html`，或在项目目录启动一个静态服务器：
+
+```bash
+python3 -m http.server 8000
+# 或 npm start
+```
+
+然后访问 <http://localhost:8000>。
+
+## 操作
+
+| 按键 | 作用 |
+| --- | --- |
+| `↑` `↓` `←` `→` | 控制移动方向（准备状态下按方向键也会开始游戏） |
+| `空格` | 暂停 / 继续；准备或结束状态下开始游戏 |
+| `R` | 重新开始 |
+| `Enter` | 准备状态下开始，结束状态下重开 |
+
+页面下方的按钮同样支持开始、暂停 / 继续和重新开始。
+
+## 测试
+
+游戏逻辑与 DOM 解耦，使用 Node 内置测试运行器验证：
+
+```bash
+npm test
+```
+
+需要 Node.js 18 及以上版本。
+
+## 目录结构
+
+```text
+.
+├── index.html          # 页面结构
+├── styles.css          # 界面样式
+├── js/
+│   ├── game.js         # 贪吃蛇核心逻辑（可在 Node 中直接测试）
+│   └── main.js         # Canvas 渲染、输入与界面状态
+├── tests/
+│   └── game.test.mjs   # 核心逻辑单元测试
+└── package.json
+```
+
+## 截图
+
+![游戏进行中](docs/screenshots/gameplay.jpg)

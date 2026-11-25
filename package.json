@@ -1,0 +1,13 @@
+{
+  "name": "classic-snake",
+  "version": "1.0.0",
+  "private": true,
+  "description": "经典贪吃蛇小游戏，原生 HTML/CSS/JavaScript + Canvas 实现",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070b14" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236dff9e'/%3E%3Ctext x='32' y='45' font-family='monospace' font-size='38' font-weight='bold' text-anchor='middle' fill='%2304130a'%3ES%3C/text%3E%3C/svg%3E" />
+    <title>贪吃蛇 · Classic Snake</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <div class="brand-text">
+            <h1>贪吃蛇</h1>
+            <p>CLASSIC SNAKE</p>
+          </div>
+        </div>
+        <div class="score" aria-live="polite">
+          <span class="score-label">得分</span>
+          <strong class="score-value" id="score">0</strong>
+        </div>
+      </header>
+
+      <main class="panel">
+        <div class="board-wrap">
+          <canvas id="board" width="600" height="600" role="img" aria-label="贪吃蛇游戏棋盘"></canvas>
+
+          <div class="overlay" id="overlay">
+            <div class="overlay-card">
+              <p class="overlay-kicker" id="overlay-kicker">READY</p>
+              <h2 id="overlay-title">准备开始</h2>
+              <p class="overlay-text" id="overlay-text">方向键控制移动，吃到食物加 10 分</p>
+              <button class="btn btn-primary" id="overlay-action" type="button">开始游戏</button>
+              <p class="overlay-hint" id="overlay-hint">空格 暂停 / 继续 · R 重新开始</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <span class="status" id="status" data-state="ready">准备开始</span>
+          <div class="actions">
+            <button class="btn btn-ghost" id="pause-btn" type="button">暂停</button>
+            <button class="btn btn-ghost" id="restart-btn" type="button">重新开始</button>
+          </div>
+        </div>
+      </main>
+
+      <p class="key-hints">
+        <span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 移动</span>
+        <span><kbd>空格</kbd> 暂停 / 继续</span>
+        <span><kbd>R</kbd> 重新开始</span>
+      </p>
+    </div>
+
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
